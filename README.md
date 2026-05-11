@@ -1,12 +1,15 @@
 # SkillMaster: Toward Autonomous Skill Mastery in LLM Agents
 
+## 🔥 News
+- **[05/11/2026]** The code of SkillMaster was released!
 
-## Overview
+## 📖 Overview
 
 SkillMaster enables LLM agents to autonomously acquire and refine skills from experience, transforming skills from externally managed resources into self-improving capabilities.
+
 ![Framework Overview](assets/overview.png)
 
-##  Key Features
+## 🛠️ Key Features
 
 - **Autonomous Skill Mastery**: Skills are no longer externally managed by teachers, hand-designed rules, or auxiliary modules. The agent learns to actively improve its own skill bank from experience, transforming skills from static resources into a self-improving capability.
 
@@ -16,16 +19,11 @@ SkillMaster enables LLM agents to autonomously acquire and refine skills from ex
 
 - **Decoupled Optimization**: Task-solving actions and skill-editing decisions are optimized with separately normalized advantages, then merged into a unified loss with a tunable weight, enabling stable joint training without objective interference.
 
-## Model and Dataset Download
-The anonymous release does not include:
-  - full training datasets
-  - processed SFT datasets
-  - SFT checkpoints
-  - RL checkpoints
+## ⏬ Model and Dataset Download
 
 These resources will be released after paper acceptance.
 
-## Installation
+## 🚀 Installation
 ### Install veRL
 ```bash
 conda create -n verl-agent python==3.12 -y
@@ -145,7 +143,7 @@ conda activate retriever
 bash examples/search/retriever/retrieval_launch.sh > retrieval_server.log 
 ```
 
-## RL Training
+## 🏋️ RL Training
 
 ### ALFWorld
 
@@ -172,9 +170,19 @@ bash examples/grpo_trainer/run_webshop_skill_tool_rollout.sh vllm \
   trainer.n_gpus_per_node=8
 ```
 
+## 📚 Citation
+If you find our work helpful, please consider citing:
 
+```bibtex
+@article{,
+  title={},
+  author={},
+  journal={},
+  year={2026}
+}
+```
 
-## Acknowledgement
+## 🙏 Acknowledgement
 
 We thank the open-source community and the following projects for making this work possible:
 
