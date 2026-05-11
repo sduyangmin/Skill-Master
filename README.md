@@ -1,13 +1,15 @@
 # SkillMaster: Toward Autonomous Skill Mastery in LLM Agents
 
-## 🔥 News
-- **[05/11/2026]** The code of SkillMaster was released!
 
 ## 📖 Overview
 
 SkillMaster enables LLM agents to autonomously acquire and refine skills from experience, transforming skills from externally managed resources into self-improving capabilities.
 
 ![Framework Overview](assets/overview.png)
+
+## 🔥 News
+- **[05/11/2026]** The code of SkillMaster was released!
+
 
 ## 🛠️ Key Features
 
