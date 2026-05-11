@@ -1,0 +1,86 @@
+tools:
+  - class_name: verl.tools.skill_bank_tools.ProposeSkillTool
+    config:
+      skill_bank_path: memory_data/alfworld/claude_style_skills.json
+      autosave: true
+    tool_schema:
+      type: function
+      function:
+        name: propose_skill
+        description: Propose and add a new reusable skill to the skill bank after a completed episode.
+        parameters:
+          type: object
+          properties:
+            category:
+              type: string
+              description: Skill category. Use general for general skills, otherwise use a task-specific category name.
+            title:
+              type: string
+              description: Short skill title, ideally 3-8 words.
+            principle:
+              type: string
+              description: A concise reusable principle in 1-2 sentences.
+            when_to_apply:
+              type: string
+              description: The condition under which the skill should be applied.
+            evidence:
+              type: string
+              description: Episode evidence explaining why this skill is needed.
+          required:
+            - category
+            - title
+            - principle
+            - when_to_apply
+            - evidence
+
+  - class_name: verl.tools.skill_bank_tools.UpdateSkillTool
+    config:
+      skill_bank_path: memory_data/alfworld/claude_style_skills.json
+      autosave: true
+    tool_schema:
+      type: function
+      function:
+        name: update_skill
+        description: Update an existing skill in the skill bank after a completed episode.
+        parameters:
+          type: object
+          properties:
+            skill_id:
+              type: string
+              description: The identifier of the existing skill to update.
+            title:
+              type: string
+              description: Updated skill title.
+            principle:
+              type: string
+              description: Updated reusable principle.
+            when_to_apply:
+              type: string
+              description: Updated trigger condition.
+            reason:
+              type: string
+              description: Reason this skill should be revised.
+          required:
+            - skill_id
+            - title
+            - principle
+            - when_to_apply
+            - reason
+
+  - class_name: verl.tools.skill_bank_tools.KeepSkillTool
+    config:
+      skill_bank_path: memory_data/alfworld/claude_style_skills.json
+      autosave: true
+    tool_schema:
+      type: function
+      function:
+        name: keep_skill
+        description: Keep the skill bank unchanged after a completed episode.
+        parameters:
+          type: object
+          properties:
+            reason:
+              type: string
+              description: Why no new skill or update is needed.
+          required:
+            - reason

@@ -1,0 +1,40 @@
+# Python cache and local tooling
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+*.egg-info/
+.claude/
+/paper
+/docs
+test.ipynb
+.codex
+
+# Local experiment artifacts
+/checkpoints/
+/data/
+/outputs/
+/wandb/
+/ray_results/
+/debug/
+/debug_traces/
+/logs/
+/tests
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# Local mutable/generated skill banks
+/memory_data/
+
+# OS/editor metadata
+.DS_Store
+.idea/
+.vscode/
