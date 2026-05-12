@@ -176,10 +176,10 @@ bash examples/grpo_trainer/run_webshop_skill_tool_rollout.sh vllm \
 If you find our work helpful, please consider citing:
 
 ```bibtex
-@article{,
-  title={},
-  author={},
-  journal={},
+@article{yang2026skillmaster,
+  title={SkillMaster: Toward Autonomous Skill Mastery in LLM Agents},
+  author={Yang, Min and Piao, Jinghua and Xia, Xu and Lan, Xiaochong and Chen, Jiaju and Gong, Yongshun and Li, Yong},
+  journal={arXiv preprint arXiv:2605.08693},
   year={2026}
 }
 ```
