@@ -11,8 +11,7 @@ This document provides the detailed evidence referenced in our rebuttal. It cove
 
 ## 1. Skill-Management Dynamics During Training
 
-The ALFWorld skill bank starts with 58 skills. The table reports all executed management decisions at each validation checkpoint. Following the accounting used in the rebuttal, bank size is 58 plus the cumulative number of `propose_skill` decisions. An `update_skill` action replaces an existing entry, while `keep_skill` leaves the bank unchanged.
-
+The ALFWorld skill bank starts with 58 skills. The table reports all executed management decisions at each checkpoint. 
 | Step | `keep_skill` | `propose_skill` | `update_skill` | Cumulative bank size |
 |---:|---:|---:|---:|---:|
 | 5 | 81.25% | 9.38% | 9.38% | 70 |
