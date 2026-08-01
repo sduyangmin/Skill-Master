@@ -129,7 +129,7 @@ python3 -m verl.trainer.main_ppo \
     +env.skill_tool_rollout.trace_max_steps=12 \
     +env.skill_tool_rollout.trajectory_level=False \
     +env.skill_tool_rollout.validation_dump_dir=$validation_dump_dir \
-    +env.skill_tool_rollout.mutate_on_train=False \
+    +env.skill_tool_rollout.mutate_on_train=True \
     +env.skill_tool_rollout.mutate_on_validation=True \
     +env.skill_tool_rollout.skill_mgmt_advantage_weight=0.2 \
     +env.skill_tool_rollout.trajectory_response_length=$trajectory_response_length \

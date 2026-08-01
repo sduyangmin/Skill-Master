@@ -455,6 +455,85 @@ class TrajectoryCollector:
             is_train=is_train,
         )
 
+    def _execute_skill_tool_calls_with_utility_gate(
+        self,
+        *,
+        actor_rollout_wg,
+        envs: EnvironmentManagerBase,
+        responses: List[str],
+        is_train: bool,
+    ) -> tuple[List[dict[str, Any]], np.ndarray, list[dict[str, Any]]]:
+        mutate_bank = self._skill_bank_mutation_enabled(is_train=is_train)
+        utility_enabled = self._skill_utility_enabled(is_train=is_train)
+
+        # Utility-scored edits must be evaluated against the unmodified bank.
+        # Non-utility workflows retain their existing immediate-write behavior.
+        mutate_immediately = mutate_bank and not utility_enabled
+        tool_results = [
+            self._execute_skill_tool_call(envs, response, item=i, mutate_bank=mutate_immediately)
+            for i, response in enumerate(responses)
+        ]
+        utility_rewards, utility_probe_infos = self._skill_downstream_utility_rewards(
+            actor_rollout_wg,
+            envs,
+            responses,
+            tool_results,
+            is_train=is_train,
+        )
+
+        if not utility_enabled:
+            return tool_results, utility_rewards, utility_probe_infos
+
+        finalized_results = []
+        for item, (response, candidate_result, reward) in enumerate(
+            zip(responses, tool_results, utility_rewards)
+        ):
+            result = dict(candidate_result)
+            tool = str(result.get("tool") or "")
+            status = str(result.get("status") or "")
+
+            if tool == "keep_skill":
+                result["dry_run"] = not mutate_bank
+                finalized_results.append(result)
+                continue
+
+            if tool not in {"propose_skill", "update_skill"} or status not in {"added", "updated"}:
+                finalized_results.append(result)
+                continue
+
+            utility_reward = float(reward)
+            utility_approved = bool(np.isfinite(utility_reward) and utility_reward > 0.0)
+            result["utility_reward"] = utility_reward
+            result["utility_approved"] = utility_approved
+
+            if not utility_approved:
+                result["candidate_status"] = status
+                result["status"] = "utility_rejected"
+                result["message"] = (
+                    "Candidate edit was not persisted because counterfactual utility "
+                    "must be greater than zero."
+                )
+                result["bank_mutated"] = False
+                finalized_results.append(result)
+                continue
+
+            if not mutate_bank:
+                finalized_results.append(result)
+                continue
+
+            committed_result = self._execute_skill_tool_call(
+                envs,
+                response,
+                item=item,
+                mutate_bank=True,
+            )
+            committed_result["candidate_status"] = status
+            committed_result["utility_reward"] = utility_reward
+            committed_result["utility_approved"] = True
+            finalized_results.append(committed_result)
+
+        return finalized_results, utility_rewards, utility_probe_infos
+
     def _temporary_alfworld_skill_bank(
         self,
         envs: EnvironmentManagerBase,
@@ -1709,16 +1788,10 @@ class TrajectoryCollector:
         batch = batch.union(batch_output)
 
         responses = self.tokenizer.batch_decode(batch.batch['responses'], skip_special_tokens=True)
-        mutate_bank = self._skill_bank_mutation_enabled(is_train=is_train)
-        tool_results = [
-            self._execute_skill_tool_call(envs, response, item=i, mutate_bank=mutate_bank)
-            for i, response in enumerate(responses)
-        ]
-        utility_rewards, utility_probe_infos = self._skill_downstream_utility_rewards(
-            actor_rollout_wg,
-            envs,
-            responses,
-            tool_results,
+        tool_results, utility_rewards, utility_probe_infos = self._execute_skill_tool_calls_with_utility_gate(
+            actor_rollout_wg=actor_rollout_wg,
+            envs=envs,
+            responses=responses,
             is_train=is_train,
         )
         skill_reward_shaping = self._skill_tool_reward_shapings(responses, tool_results) + utility_rewards
@@ -2433,16 +2506,11 @@ class TrajectoryCollector:
             batch.non_tensor_batch["traj_uid"] = traj_uid
             batch = batch.union(batch_output)
             responses = self.tokenizer.batch_decode(batch.batch["responses"], skip_special_tokens=True)
-            mutate_bank = self._skill_bank_mutation_enabled(is_train=is_train)
-            tool_results = [
-                self._execute_skill_tool_call(envs, response, item=i, mutate_bank=mutate_bank)
-                for i, response in enumerate(responses)
-            ]
-            utility_rewards, utility_probe_infos = self._skill_downstream_utility_rewards(
-                actor_rollout_wg,
-                envs,
-                responses,
-                tool_results,
+            tool_results, utility_rewards, utility_probe_infos = self._execute_skill_tool_calls_with_utility_gate(
+                actor_rollout_wg=actor_rollout_wg,
+                envs=envs,
+                responses=responses,
+                is_train=is_train,
             )
             skill_reward_shaping = self._skill_tool_reward_shapings(responses, tool_results) + utility_rewards
             valid_tools = np.array(
