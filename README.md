@@ -18,7 +18,7 @@ SkillMaster enables LLM agents to autonomously acquire and refine skills from ex
 
 ## SFT Datasets
 
-We release two processed datasets used for supervised fine-tuning (SFT) in SkillMaster. Each row is one training example for either taking an action or managing the skill bank after an episode.
+We release two processed datasets used for supervised fine-tuning (SFT) in SkillMaster.
 
 | Dataset | Download |
 | --- | --- |
