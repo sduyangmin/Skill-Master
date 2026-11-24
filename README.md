@@ -16,14 +16,17 @@ SkillMaster enables LLM agents to autonomously acquire and refine skills from ex
 
 - **Decoupled Optimization**: Task-solving actions and skill-editing decisions are optimized with separately normalized advantages, then merged into a unified loss with a tunable weight, enabling stable joint training without objective interference.
 
-## Model and Dataset Download
-The anonymous release does not include:
-  - full training datasets
-  - processed SFT datasets
-  - SFT checkpoints
-  - RL checkpoints
+## SFT Datasets
 
-These resources will be released after paper acceptance.
+We release three processed datasets used for supervised fine-tuning (SFT) in SkillMaster. Each row is one training example for either taking an action or managing the skill bank after an episode.
+
+| Dataset | Training examples | Download |
+| --- | ---: | --- |
+| ALFWorld | 17,224 | [Parquet](datasets/sft/alfworld.parquet?raw=true) |
+| WebShop | 6,909 | [Parquet](datasets/sft/webshop.parquet?raw=true) |
+| SearchQA (continued SFT stage) | 8,634 | [Parquet](datasets/sft/searchqa_continued.parquet?raw=true) |
+
+This release contains training data only.
 
 ## Installation
 ### Install veRL
