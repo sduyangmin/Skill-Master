@@ -22,9 +22,9 @@ We release three processed datasets used for supervised fine-tuning (SFT) in Ski
 
 | Dataset | Training examples | Download |
 | --- | ---: | --- |
-| ALFWorld | 17,224 | [Parquet](datasets/sft/alfworld.parquet?raw=true) |
-| WebShop | 6,909 | [Parquet](datasets/sft/webshop.parquet?raw=true) |
-| SearchQA (continued SFT stage) | 8,634 | [Parquet](datasets/sft/searchqa_continued.parquet?raw=true) |
+| ALFWorld | 17,224 | [Parquet](datasets/sft/SFTData_ALFWorld.parquet?raw=true) |
+| WebShop | 6,909 | [Parquet](datasets/sft/SFTData_WebShop.parquet?raw=true) |
+| SearchQA (continued SFT stage) | 8,634 | [Parquet](datasets/sft/SFTData_SearchQA.parquet?raw=true) |
 
 This release contains training data only.
 
