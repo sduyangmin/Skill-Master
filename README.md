@@ -18,13 +18,12 @@ SkillMaster enables LLM agents to autonomously acquire and refine skills from ex
 
 ## SFT Datasets
 
-We release three processed datasets used for supervised fine-tuning (SFT) in SkillMaster. Each row is one training example for either taking an action or managing the skill bank after an episode.
+We release two processed datasets used for supervised fine-tuning (SFT) in SkillMaster. Each row is one training example for either taking an action or managing the skill bank after an episode.
 
 | Dataset | Download |
 | --- | --- |
 | ALFWorld | [Parquet](datasets/sft/SFTData_ALFWorld.parquet?raw=true) |
 | WebShop | [Parquet](datasets/sft/SFTData_WebShop.parquet?raw=true) |
-| SearchQA | [Parquet](datasets/sft/SFTData_SearchQA.parquet?raw=true) |
 
 ## Installation
 ### Install veRL
